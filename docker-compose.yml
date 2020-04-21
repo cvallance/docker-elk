@@ -1,4 +1,4 @@
-version: '3.2'
+version: "3.2"
 
 services:
   elasticsearch:
@@ -41,8 +41,10 @@ services:
         target: /usr/share/logstash/pipeline
         read_only: true
     ports:
-      - "5000:5000/tcp"
-      - "5000:5000/udp"
+      - "5043:5043/tcp"
+      - "5043:5043/udp"
+      - "5044:5044/tcp"
+      - "5044:5044/udp"
       - "9600:9600"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
@@ -67,6 +69,26 @@ services:
       - elk
     depends_on:
       - elasticsearch
+
+  filebeat:
+    build:
+      context: filebeat/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - type: bind
+        source: ./filebeat/config/filebeat.yml
+        target: /usr/share/filebeat/filebeat.yml
+        read_only: true
+      - type: bind
+        source: ../logs/dev
+        target: /var/logs/devlogs
+        read_only: true
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+      - logstash
 
 networks:
   elk:
