@@ -1,0 +1,10 @@
+name: docker-elk
+root: ~/src/docker-elk
+windows:
+  - docker-compose:
+      panes:
+        - docker-compose up
+  - logsdir
+      root: ~/src/logs/dev
+      panes:
+        - ls -lah
