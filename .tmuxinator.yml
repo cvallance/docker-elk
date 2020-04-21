@@ -4,7 +4,7 @@ windows:
   - docker-compose:
       panes:
         - docker-compose up
-  - logsdir
+  - logsdir:
       root: ~/src/logs/dev
       panes:
         - ls -lah
