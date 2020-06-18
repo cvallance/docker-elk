@@ -10,7 +10,7 @@ filebeat.inputs:
   - type: log
     enabled: true
     paths:
-      - /var/logs/devlogs/*.log
+      - /var/logs/**/logs/*.log
     json.keys_under_root: true
     json.add_error_key: true
 
